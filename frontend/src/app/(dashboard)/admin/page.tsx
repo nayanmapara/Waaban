@@ -19,7 +19,7 @@ const cardItems = [
   {
     title: "Charts",
     icon: ChartArea,
-    url: "#",
+    url: "analytics",
   },
   {
     title: "Settings",
@@ -49,7 +49,7 @@ function CustomCard({
   );
 }
 
-export function CardWithIcons() {
+export default function CardWithIcons() {
   return (
     <div className="flex">
       <div className="grid grid-cols-2 gap-5">
