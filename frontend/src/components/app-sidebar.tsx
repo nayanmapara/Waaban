@@ -44,10 +44,10 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent>
+    <Sidebar >
+      <SidebarContent className="bg-orange-200 bg-gradient-to-br from-orange-200 to-orange-300">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl mb-3 text-black">Waaban</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -64,13 +64,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
+      <SidebarFooter className="bg-orange-400">
+        <SidebarMenu >
+          <SidebarMenuItem >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> Parrot Singh
+                <SidebarMenuButton >
+                  <User2 /> James Webb
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
