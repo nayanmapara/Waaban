@@ -4,8 +4,13 @@ import json
 import re
 from datetime import datetime 
 
+from dotenv import load_dotenv
 
-output_dir = './backend/utils/prompt/output'
+load_dotenv()
+
+
+
+output_dir = './output/'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
     
