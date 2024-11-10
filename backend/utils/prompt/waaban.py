@@ -110,6 +110,8 @@ class WaabanAssistant:
             ],
             "message": "A message to the user that their information has been processed and a ticket has been created.",
             "summary": "A detailed summary of the information. This should be concise and informative. Text should be limited to 200-250 words. Include key details and recommendations."
+            "Description": "This should be comprehensive and provide context for the diagnosis and recommendations from the health assistant."
+            "Prority": "The priority level of the ticket. This can be 'Low', 'Medium', or 'High' based on the severity of the symptoms and concerns."
         }}
 
         - Fill in the JSON structure with the relevant information based on the customer's symptoms and category.
