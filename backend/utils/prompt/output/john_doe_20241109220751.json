@@ -1,39 +1,35 @@
 {
-    "User": {
-        "name": "John Doe",
-        "age": "30",
-        "gender": "male",
-        "symptoms": "I have a rash on my penis",
-        "conditions": "None",
-        "medications": "None"
-    },
-    "diagnoses": [
-        {
-            "name": "Possible Yeast Infection or STI",
-            "explanation": "A rash on the penis can be caused by a yeast infection, bacterial STI, or viral STI. It's essential to consult a healthcare professional for proper diagnosis and treatment.",
-            "common_symptoms": [
-                "Redness",
-                "Iching",
-                "Burning sensation"
-            ],
-            "causes": [
-                "Sexual contact with an infected person",
-                "Poor hygiene",
-                "Sensitive skin"
-            ],
-            "potential_treatments": [
-                "Antifungal or antibiotics",
-                "Pain medication",
-                "Topical creams"
-            ],
-            "recommendations": [
-                "Schedule an appointment with a healthcare professional",
-                "Wash the area with soap and water",
-                "Avoid tight-fitting clothing"
-            ],
-            "next_steps": "Seek medical attention and adhere to follow-up appointments."
-        }
-    ],
-    "message": "A message to the user that their information has been processed and a ticket has been created.",
-    "summary": "Your concern about a rash on your penis has been acknowledged. A possible diagnosis is a yeast infection or an STI, which requires medical attention. We recommend scheduling an appointment with a healthcare professional and following proper hygiene practices. Please ensure to note any potential treatments and follow-up appointments to ensure proper treatment."
+  "User": {
+    "name": "John Doe",
+    "age": "30",
+    "gender": "male",
+    "symptoms": "I have a rash on my penis",
+    "conditions": "None",
+    "medications": "None"
+  },
+  "diagnoses": [
+    {
+      "name": "Possible Yeast Infection or STI",
+      "explanation": "A rash on the penis can be caused by a yeast infection, bacterial STI, or viral STI. It's essential to consult a healthcare professional for proper diagnosis and treatment.",
+      "common_symptoms": ["Redness", "Iching", "Burning sensation"],
+      "causes": [
+        "Sexual contact with an infected person",
+        "Poor hygiene",
+        "Sensitive skin"
+      ],
+      "potential_treatments": [
+        "Antifungal or antibiotics",
+        "Pain medication",
+        "Topical creams"
+      ],
+      "recommendations": [
+        "Schedule an appointment with a healthcare professional",
+        "Wash the area with soap and water",
+        "Avoid tight-fitting clothing"
+      ],
+      "next_steps": "Seek medical attention and adhere to follow-up appointments."
+    }
+  ],
+  "message": "A message to the user that their information has been processed and a ticket has been created.",
+  "summary": "Your concern about a rash on your penis has been acknowledged. A possible diagnosis is a yeast infection or an STI, which requires medical attention. We recommend scheduling an appointment with a healthcare professional and following proper hygiene practices. Please ensure to note any potential treatments and follow-up appointments to ensure proper treatment."
 }
