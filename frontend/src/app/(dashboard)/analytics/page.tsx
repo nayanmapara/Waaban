@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2"; // Example chart library import
+import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -36,13 +36,18 @@ export default function PatientPage() {
     const params = useParams();
     const router = useRouter();
     const [patientData, setPatientData] = useState<PatientData[]>([]);
+    const [symptomCounts, setSymptomCounts] = useState<Record<string, number>>({});
 
     useEffect(() => {
         async function fetchPatientData() {
             try {
-                const response = await fetch('/assets/data/data.json'); // Fetch data from your JSON file
+                const response = await fetch('/assets/data/data.json'); // Adjust the path as needed
+                if (!response.ok) {
+                    throw new Error("Failed to fetch patient data");
+                }
                 const data: PatientData[] = await response.json();
                 setPatientData(data);
+                calculateSymptomCounts(data);
             } catch (error) {
                 console.error("Error fetching patient data:", error);
             }
@@ -51,11 +56,21 @@ export default function PatientPage() {
         fetchPatientData();
     }, []);
 
-    const handleBarClick = (id: string) => {
-        router.push(`/${id}`);
+    const calculateSymptomCounts = (data: PatientData[]) => {
+        const counts: Record<string, number> = {};
+        data.forEach(patient => {
+            const symptoms = patient.User.symptoms.split(',').map(symptom => symptom.trim());
+            symptoms.forEach(symptom => {
+                counts[symptom] = (counts[symptom] || 0) + 1;
+            });
+        });
+        setSymptomCounts(counts);
     };
 
-    // Prepare data for the chart
+    const handleBarClick = (id: string) => {
+        router.push(`/patients/${id}`);
+    };
+
     const chartData = {
         labels: patientData.map(patient => patient.User.name),
         datasets: [
@@ -78,16 +93,22 @@ export default function PatientPage() {
         ],
     };
 
+
+
     return (
         <div className="p-6 max-w-4xl mx-auto">
-            <h1 className="flex text-4xl justify-center font-bold mb-6">Patient Overview</h1>
+            <h1 className="flex text-4xl justify-center font-bold mb-6">Analysis</h1>
 
-            {/* Render Chart */}
-            <div className="mb-8 bg-white p-6 rounded-lg shadow-sm">
+            {/* Patient Priority Chart */}
+            <div className="mb-8 bg-white p-6 text-center rounded-lg shadow-sm">
                 <h2 className="text-xl font-semibold mb-4 text-blue-600">Patient Priority Chart</h2>
                 <Bar
                     data={chartData}
+                    height={500}  // Adjust the height as needed (higher number for larger size)
+                    width={600}   // Adjust the width as needed (higher number for larger size)
                     options={{
+                        responsive: true,
+                        maintainAspectRatio: true,
                         onClick: (_, elements) => {
                             if (elements.length > 0) {
                                 const index = elements[0].index;
@@ -101,6 +122,7 @@ export default function PatientPage() {
                 />
             </div>
 
+            {/* Patient Details */}
             {params.id && (
                 <>
                     {patientData
@@ -132,6 +154,7 @@ export default function PatientPage() {
                         ))}
                 </>
             )}
+
         </div>
     );
 }
