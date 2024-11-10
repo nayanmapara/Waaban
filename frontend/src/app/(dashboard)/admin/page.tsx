@@ -32,8 +32,8 @@ function CustomCard({
   url: string;
 }) {
   return (
-    <Link href={url}>
-      <Card className="h-[80vh] w-[35vw] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-blue-500">
+    <Link href={url} className="flex items-center bg:gradient-to-b from-orange-200 to-orange-400 hover:bg-orange-400">
+      <Card className=" hover:bg-sky-200 h-[80vh] w-[35vw] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-blue-500">
         <CardHeader className="flex items-center justify-center p-14 h-full">
           <Icon className="w-20 h-16 mb-4 " />
           <CardTitle className="font-semibold">{title}</CardTitle>
@@ -54,6 +54,7 @@ export default function CardWithIcons() {
             icon={item.icon}
             title={item.title}
             url={item.url}
+
           />
         ))}
       </div>

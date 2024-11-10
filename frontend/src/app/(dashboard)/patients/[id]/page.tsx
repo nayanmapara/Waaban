@@ -244,6 +244,18 @@ export default async function PatientPage({ params }: { params: { id: string } }
                   <h3 className="font-semibold">Current Medications</h3>
                   <p className="text-sm">{patient.medications}</p>
                 </div>
+                <div className=" flex justify-between space-x-2 items-center">
+                  <Button className="w-1/2 bg-gradient-to-br from-cyan-500 to-cyan-900">
+                    <Link href={`/patients/${patient.id}/send-message`}>
+                      Send Message
+                    </Link>
+                  </Button>
+                  <Button className="w-1/2 bg-gradient-to-br from-pink-500 to-pink-900 hover:bg-slate-600">
+                    <Link href={`/patients/${patient.id}/send-message`}>
+                      Schedule Appointment
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div >
           </CardContent >

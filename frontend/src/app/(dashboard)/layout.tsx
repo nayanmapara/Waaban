@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-b from-orange-200 to-orange-400 w-full">
+      <body className="bg-gradient-to-b from-orange-200 to-orange-400 w-[100vw]">
         <SidebarProvider defaultOpen >
           <AppSidebar />
           <SidebarTrigger />
