@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Contact, NotebookTabs, Settings, User2 } from "lucide-react";
+import { Calendar, ChartArea, Contact, NotebookTabs, Settings, User2 } from "lucide-react";
 import * as React from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -17,9 +17,9 @@ const cardItems = [
     url: "#",
   },
   {
-    title: "Patient's Details",
-    icon: NotebookTabs,
-    url: "/patients-details",
+    title: "Charts",
+    icon: ChartArea,
+    url: "#",
   },
   {
     title: "Settings",
