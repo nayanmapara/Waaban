@@ -47,7 +47,7 @@ export default function PatientPage() {
                 }
                 const data: PatientData[] = await response.json();
                 setPatientData(data);
-                calculateSymptomCounts(data);
+
             } catch (error) {
                 console.error("Error fetching patient data:", error);
             }
@@ -56,16 +56,7 @@ export default function PatientPage() {
         fetchPatientData();
     }, []);
 
-    const calculateSymptomCounts = (data: PatientData[]) => {
-        const counts: Record<string, number> = {};
-        data.forEach(patient => {
-            const symptoms = patient.User.symptoms.split(',').map(symptom => symptom.trim());
-            symptoms.forEach(symptom => {
-                counts[symptom] = (counts[symptom] || 0) + 1;
-            });
-        });
-        setSymptomCounts(counts);
-    };
+
 
     const handleBarClick = (id: string) => {
         router.push(`/patients/${id}`);

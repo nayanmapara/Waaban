@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, ChartArea, Settings, User2 } from "lucide-react";
+import { ChartArea, User2 } from "lucide-react";
 import * as React from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -11,21 +11,13 @@ const cardItems = [
     icon: User2,
     url: "/patients",
   },
-  {
-    title: "Appointments",
-    icon: Calendar,
-    url: "#",
-  },
+
   {
     title: "Charts",
     icon: ChartArea,
     url: "analytics",
   },
-  {
-    title: "Settings",
-    icon: Settings,
-    url: "#",
-  },
+
 ];
 
 function CustomCard({
@@ -39,9 +31,9 @@ function CustomCard({
 }) {
   return (
     <Link href={url}>
-      <Card className="h-[38vh] w-[35vw] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-blue-500">
-        <CardHeader className="flex items-center p-14 h-full">
-          <Icon className="w-20 h-16 mb-4" />
+      <Card className="h-[80vh] w-[35vw] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-blue-500">
+        <CardHeader className="flex items-center justify-center p-14 h-full">
+          <Icon className="w-20 h-16 mb-4 " />
           <CardTitle className="font-semibold">{title}</CardTitle>
         </CardHeader>
       </Card>
@@ -51,8 +43,8 @@ function CustomCard({
 
 export default function CardWithIcons() {
   return (
-    <div className="flex">
-      <div className="grid grid-cols-2 gap-5">
+    <div className="flex items-center w-full justify-center">
+      <div className="flex flex-row gap-5">
         {cardItems.map((item, index) => (
           <CustomCard
             key={index}

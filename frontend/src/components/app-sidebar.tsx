@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, ChevronUp, Home, Settings, User2, ChartArea } from "lucide-react";
+import { ChevronUp, Home, Settings, User2, ChartArea } from "lucide-react";
 
 import {
   Sidebar,
@@ -29,11 +29,7 @@ const items = [
     url: "/",
     icon: Home,
   },
-  {
-    title: "Appointments",
-    url: "#",
-    icon: Calendar,
-  },
+
   {
     title: "Charts",
     url: "analytics",
