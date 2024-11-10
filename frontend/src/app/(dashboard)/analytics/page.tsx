@@ -36,7 +36,7 @@ export default function PatientPage() {
     const params = useParams();
     const router = useRouter();
     const [patientData, setPatientData] = useState<PatientData[]>([]);
-    const [symptomCounts, setSymptomCounts] = useState<Record<string, number>>({});
+
 
     useEffect(() => {
         async function fetchPatientData() {
