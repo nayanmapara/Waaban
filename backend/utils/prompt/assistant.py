@@ -1,15 +1,15 @@
-# waaban.py
 import os
 import json
-import re
 from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
+import re
+
 load_dotenv()
 
 class WaabanAssistant:
-    def __init__(self, api_key, output_dir='./output/'):
+    def __init__(self, api_key, output_dir='./backend/output/'):
         self.api_key = api_key
         self.output_dir = output_dir
         if not os.path.exists(self.output_dir):
@@ -74,9 +74,9 @@ class WaabanAssistant:
         prompt = f"""
         You are Waaban, a virtual health assistant designed to provide personalized health and wellness guidance.
 
-        Based on the following customer data, provide a detailed JSON response in the specified format:
+        Based on the following Patient data, provide a detailed JSON response in the specified format:
 
-        Customer Data:
+        Patient Data:
         - Name: {patient.get('name')}
         - Age: {patient.get('age')}
         - Gender: {patient.get('gender')}
@@ -112,17 +112,57 @@ class WaabanAssistant:
             "summary": "A detailed summary of the information. This should be concise and informative. Text should be limited to 200-250 words. Include key details and recommendations."
         }}
 
-        - Fill in the JSON structure with the relevant information based on the customer's symptoms and category.
+        - Fill in the JSON structure with the relevant information based on the Patient's symptoms and category.
         - Ensure the JSON output is properly formatted and contains all the necessary information.
         - Return only the JSON output in the specified format.
         """
-
         return prompt
 
-    def create_json(self, patient):
+    def parse_transcript(self, transcript):
+        """
+        Manually extract data from the transcript.
+        """
+        transcript = transcript.lower()
+
+        patient_data = {}
+
+        # Look for name (assuming format: 'my name is [name]')
+        if 'name is' in transcript:
+            name_start = transcript.index('name is') + len('name is') + 1
+            name_end = transcript.find(',', name_start) if ',' in transcript[name_start:] else transcript.find(' ', name_start + 1)
+            patient_data['name'] = transcript[name_start:name_end].strip().title()
+
+        # Look for age (assuming format: 'i am [age] years old')
+        if 'years old' in transcript:
+            age_start = transcript.find('i am') + len('i am') + 1
+            age_end = transcript.find('years old', age_start)
+            patient_data['age'] = transcript[age_start:age_end].strip()
+
+        # Look for gender (assuming format: 'i am [gender]')
+        if 'i am' in transcript and ('male' in transcript or 'female' in transcript):
+            gender_start = transcript.find('i am') + len('i am') + 1
+            gender_end = transcript.find(' ', gender_start)
+            patient_data['gender'] = transcript[gender_start:gender_end].strip()
+
+        # Look for symptoms (assuming format: 'i am feeling [symptoms]')
+        if 'feeling' in transcript:
+            symptoms_start = transcript.find('feeling') + len('feeling') + 1
+            symptoms = transcript[symptoms_start:].strip()
+            patient_data['symptoms'] = symptoms.strip('.')
+
+        return patient_data
+
+    def create_json(self, transcript):
         """
         Generate the JSON response and save it to a file.
         """
+        # Parse the transcript into a dictionary format
+        patient = self.parse_transcript(transcript)
+        if not patient:
+            return
+        
+        print(f"Generating JSON response for patient: {patient}")
+
         prompt = self.generate_optimized_prompt(patient)
         raw_response = self.client.chat.completions.create(
             model="llama-3.2-3b-preview",
@@ -137,8 +177,8 @@ class WaabanAssistant:
             json_output = json.loads(response)
             sanitized_name = re.sub(r'\W+', '_', patient.get('name').lower())
             # Optionally, add a timestamp to ensure uniqueness
-            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            output_file_path = os.path.join(self.output_dir, f"{sanitized_name}_{timestamp}.json")
+            # timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+            output_file_path = os.path.join(self.output_dir, f"{sanitized_name}.json")
             
             with open(output_file_path, 'w') as json_file:
                 json.dump(json_output, json_file, indent=4)
@@ -148,3 +188,18 @@ class WaabanAssistant:
             print(f"Error: {e}")
             print("Response:")
             print(response)
+
+
+if __name__ == "__main__":
+    # Get the API key from environment variable
+    api_key = os.environ.get('GROQ_API_KEY')
+    if not api_key:
+        raise ValueError("API key not found. Please set the 'GROQ_API_KEY' environment variable.")
+
+    assistant = WaabanAssistant(api_key)
+
+    # Example Transcript
+    transcript = """
+    Hello, my name is Something Doe. I am 34 years old and I am feeling really tired and have had a headache for the last two days. I have no other symptoms at the moment. I am on no medications and have no previous conditions.
+    """
+    assistant.create_json(transcript)

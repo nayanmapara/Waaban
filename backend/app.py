@@ -4,8 +4,10 @@ from flask import Flask, request, jsonify, render_template
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
 import dotenv
+import json
 
 from utils.userIO.twilio_setup import make_call, transcribe_audio
+from utils.prompt.assistant import WaabanAssistant as Assistant
 
 # Load environment variables from a .env file
 dotenv.load_dotenv()
@@ -37,19 +39,15 @@ def make_call_route():
 
 @app.route("/twiml-record", methods=["POST"])
 def twiml_record():
-    response = VoiceResponse()
-    response.say("Hello, please leave a message after the beep. Press # when you're done.")
-    response.record(
+    voice_response = VoiceResponse()
+    voice_response.say("Hello! Please provide the following information. Start with your full name, then your age, followed by your gender, and finally describe your symptoms. When you’re finished, press the pound key. Thank you.")
+    voice_response.record(
         max_length=30,
-        finish_on_key="#",  # Ends the recording when the user presses #
-        # action=f"{NGROK_URL}/recording-complete",  # Callback for recording completion
-        transcribe=False,  # Disable Twilio's transcription since we're using Deepgram
+        finish_on_key="#",  # Ends the recording when the user presses
         recording_status_callback=f"{NGROK_URL}/recording-complete",  # Set the recording status callback URL
-        # recording_status_callback_event="completed"  # Trigger callback when recording is completed
     )
-    
-    response.say("Thank you for your message. We will now process it.")
-    return str(response)
+
+    return str(voice_response)
 
 @app.route("/recording-complete", methods=["POST"])
 def recording_complete():
@@ -79,6 +77,9 @@ def recording_complete():
 
         if transcription:
             print(f"Transcription: {transcription}")
+
+            Assistant().create_json(transcription)
+
             return jsonify({"transcription": transcription}), 200
         # else:
         #     print("Error during transcription.")
@@ -89,7 +90,14 @@ def recording_complete():
         # return jsonify({"error": e}), 500
  
     os.remove(audio_file_path)  # Delete the audio file after transcription
-    return jsonify({"message": "Recording completed"}), 200
+    return True
+
+@app.route("/data", methods=["GET"])
+def get_data():
+    with open('./backend/data.json', 'r') as file:
+        data = json.load(file)
+
+    return jsonify(data)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
