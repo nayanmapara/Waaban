@@ -1,223 +1,157 @@
-"use client";
+// app/patients/[id]/page.tsx
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Person } from "../columns" // Adjust this import path based on your file structure
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+// Mock data that matches your page.tsx data
+const mockData: Person[] = [
+  {
+    id: "1", // This will match the API data
+    name: "API User", // Will be overwritten by API data if id is "1"
+    age: 0,
+    gender: "Unknown",
+    priority: "Unknown",
+  },
+  {
+    id: "2",
+    name: "John Smith",
+    age: 45,
+    gender: "Male",
+    priority: "High",
+  },
+  {
+    id: "3",
+    name: "Emily Johnson",
+    age: 32,
+    gender: "Female",
+    priority: "Medium",
+  },
+  {
+    id: "4",
+    name: "Michael Brown",
+    age: 28,
+    gender: "Male",
+    priority: "Low",
+  },
+  {
+    id: "5",
+    name: "Sarah Wilson",
+    age: 52,
+    gender: "Female",
+    priority: "High",
+  },
+  {
+    id: "6",
+    name: "David Lee",
+    age: 39,
+    gender: "Male",
+    priority: "Medium",
+  },
+];
 
-interface PatientData {
-  Description: string;
-  Priority: string;
-  User: {
-    name: string;
-    age: string;
-    gender: string;
-    symptoms: string;
-    conditions: string;
-    medications: string;
-  };
-  diagnoses: Array<{
-    name: string;
-    explanation: string;
-    common_symptoms: string[];
-    causes: string[];
-    potential_treatments: string[];
-    recommendations: string[];
-    next_steps: string;
-  }>;
-  message: string;
-  summary: string;
+async function getPatientData(id: string): Promise<Person | null> {
+  // If the ID is "1", try to fetch from API
+  if (id === "1") {
+    try {
+      const response = await fetch("https://3769-198-96-35-117.ngrok-free.app/data");
+      if (response.ok) {
+        const data = await response.json();
+        return {
+          id: "1",
+          name: data.User.name || "Unknown",
+          age: parseInt(data.User.age || "0"),
+          gender: data.User.gender || "Unknown",
+          priority: data.Priority || "Unknown",
+        };
+      }
+    } catch (error) {
+      console.error('Error fetching patient:', error);
+    }
+  }
+  
+  // If API fetch fails or ID is not "1", look for the patient in mock data
+  return mockData.find(patient => patient.id === id) || null;
 }
 
-export default function PatientPage() {
-  const params = useParams();
-  const [patientData, setPatientData] = useState<PatientData | null>(null);
+export default async function PatientPage({ params }: { params: { id: string } }) {
+  const patient = await getPatientData(params.id);
 
-  useEffect(() => {
-    // Simulate API call with mock data
-    const mockData: PatientData = {
-      Description:
-        "Our health assistant has generated a personalized diagnosis and treatment plan for your symptoms. This report includes a detailed explanation of the diagnosis, common symptoms, potential causes, and recommended treatment options. We also provide guidance on the next steps to take, including scheduling a follow-up appointment with your doctor.",
-      Priority: "Medium",
-      User: {
-        name: "Adam Smith",
-        age: "19",
-        gender: "None",
-        symptoms:
-          "Really tired and have a headache for last one day, I have no other symptoms at the moment. I'm on new medications and have no previous conditions.",
-        conditions: "None",
-        medications: "None",
-      },
-      diagnoses: [
-        {
-          name: "Delayed Sleep Phase Syndrome",
-          explanation:
-            "This is a diagnosis based on your symptoms of fatigue and headache. Delayed sleep phase syndrome is a condition where the body's internal clock is out of sync, leading to fatigue, difficulty concentrating, and other symptoms. It's possible that your recent changes, including new medications and irregular sleep schedule, may be contributing to this condition.",
-          common_symptoms: [
-            "Persistent fatigue",
-            "Headaches",
-            "Difficulty concentrating",
-            "Mood changes",
-          ],
-          causes: [
-            "Irregular sleep schedule",
-            "New medications",
-            "Dehydration",
-            "Poor diet",
-          ],
-          potential_treatments: [
-            "Establishing a consistent sleep schedule",
-            "Staying hydrated",
-            "Improving diet",
-            "Avoiding caffeine and electronics before bedtime",
-          ],
-          recommendations: [
-            "Ensure you get 7-8 hours of sleep each night to help regulate your body's internal clock.",
-            "Stay hydrated by drinking plenty of water throughout the day.",
-            "Avoid caffeine and electronics before bedtime to help improve sleep quality.",
-            "Eat a balanced diet that includes plenty of fruits, vegetables, and whole grains.",
-          ],
-          next_steps:
-            "Schedule a follow-up appointment with your doctor to discuss a personalized treatment plan.",
-        },
-      ],
-      message:
-        "Your information has been processed, and a ticket has been created. Our health assistant will provide you with personalized recommendations and monitoring to help alleviate your symptoms.",
-      summary:
-        "Based on your symptoms and medical history, our health assistant has diagnosed Delayed Sleep Phase Syndrome. To help alleviate your symptoms, we recommend establishing a consistent sleep schedule, staying hydrated, avoiding caffeine and electronics before bedtime, and improving your diet. We also suggest scheduling a follow-up appointment with your doctor to discuss a personalized treatment plan. We will be monitoring your progress and providing you with regular updates.",
-    };
-
-    // Simulate API delay
-    setTimeout(() => {
-      setPatientData(mockData);
-    }, 1000);
-  }, [params.id]);
-
-  if (!patientData)
+  if (!patient) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl font-semibold">Loading patient data...</div>
+      <div className="container mx-auto p-4">
+        <div className="mb-6">
+          <Link href="/">
+            <Button variant="ghost" className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Patients
+            </Button>
+          </Link>
+        </div>
+        <Card className="max-w-2xl mx-auto">
+          <CardContent className="p-6">
+            <p className="text-center text-muted-foreground">Patient not found</p>
+          </CardContent>
+        </Card>
       </div>
     );
+  }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="flex text-4xl justify-center font-bold mb-6">
-        Patient Details
-      </h1>
-
-      {/* User Information */}
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">
-          User Information
-        </h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Name:</strong> {patientData.User.name}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Age:</strong> {patientData.User.age}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Gender:</strong> {patientData.User.gender}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Symptoms:</strong> {patientData.User.symptoms}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Conditions:</strong> {patientData.User.conditions}
-            </p>
-          </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <p>
-              <strong>Medications:</strong> {patientData.User.medications}
-            </p>
-          </div>
-        </div>
+    <div className="container mx-auto p-4">
+      <div className="mb-6">
+        <Link href="/">
+          <Button variant="ghost" className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Back to Patients
+          </Button>
+        </Link>
       </div>
 
-      {/* Description */}
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">
-          Description
-        </h2>
-        <p className="text-gray-600">{patientData.Description}</p>
-      </div>
-
-      {/* Priority */}
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">Priority</h2>
-        <p className="text-gray-600">{patientData.Priority}</p>
-      </div>
-
-      {/* Diagnoses */}
-      <div className="mb-6 p-6 bg-white rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">Diagnoses</h2>
-        {patientData.diagnoses.map((diagnosis, index) => (
-          <div key={index}>
-            <h3 className="font-semibold mb-3 text-lg">{diagnosis.name}</h3>
-            <p className="mb-4 text-gray-600">{diagnosis.explanation}</p>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-gray-50 p-4 rounded">
-                <h4 className="font-medium mb-2 text-blue-600">
-                  Common Symptoms
-                </h4>
-                <ul className="list-disc pl-4 space-y-1">
-                  {diagnosis.common_symptoms.map((symptom, i) => (
-                    <li key={i}>{symptom}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-gray-50 p-4 rounded">
-                <h4 className="font-medium mb-2 text-blue-600">Causes</h4>
-                <ul className="list-disc pl-4 space-y-1">
-                  {diagnosis.causes.map((cause, i) => (
-                    <li key={i}>{cause}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-4 bg-gray-50 p-4 rounded">
-              <h4 className="font-medium mb-2 text-blue-600">
-                Recommendations
-              </h4>
-              <ul className="list-disc pl-4 space-y-1">
-                {diagnosis.recommendations.map((rec, i) => (
-                  <li key={i}>{rec}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-4 border-t pt-4">
-              <p>
-                <strong>Next Steps:</strong> {diagnosis.next_steps}
-              </p>
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader className="space-y-6">
+          <div className="flex items-center space-x-4">
+            <Avatar className="h-20 w-20">
+              <AvatarFallback className="text-2xl">
+                {patient.name[0]}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <CardTitle className="text-2xl">{patient.name}</CardTitle>
+              <Badge 
+                className={`${
+                  patient.priority.toLowerCase() === "high" 
+                    ? "bg-red-500" 
+                    : patient.priority.toLowerCase() === "low" 
+                    ? "bg-green-500" 
+                    : "bg-orange-500"
+                } text-white`}
+              >
+                {patient.priority}
+              </Badge>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Summary */}
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">Summary</h2>
-        <p className="text-gray-600">{patientData.summary}</p>
-      </div>
-
-      {/* Message */}
-      <div className="bg-white p-6 rounded-lg shadow-sm mt-6">
-        <h2 className="text-xl font-semibold mb-4 text-blue-600">Message</h2>
-        <p className="text-gray-600">{patientData.message}</p>
-      </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Age</p>
+              <p className="font-medium">{patient.age} years</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Gender</p>
+              <p className="font-medium">{patient.gender}</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Patient ID</p>
+              <p className="font-medium">{patient.id}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  );
+  )
 }
