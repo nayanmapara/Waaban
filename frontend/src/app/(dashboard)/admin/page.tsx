@@ -43,7 +43,7 @@ function CustomCard({
 
 export default function CardWithIcons() {
   return (
-    <div className="flex items-center w-full justify-center">
+    <div className="flex items-center bg-gradient-to-br from-orange-200 to-orange-300 w-full justify-center">
       <div className="flex flex-row gap-5">
         {cardItems.map((item, index) => (
           <CustomCard

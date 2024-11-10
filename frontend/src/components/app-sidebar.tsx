@@ -46,7 +46,7 @@ export function AppSidebar() {
   return (
     <Sidebar >
       <SidebarContent className="bg-orange-200 bg-gradient-to-br from-orange-200 to-orange-300">
-        <SidebarGroup>
+        <SidebarGroup >
           <SidebarGroupLabel className="text-xl mb-3 text-black">Waaban</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
