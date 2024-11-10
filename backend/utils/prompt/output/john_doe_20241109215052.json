@@ -1,0 +1,36 @@
+{
+    "User": {
+        "name": "John Doe",
+        "age": "30",
+        "gender": "male",
+        "symptoms": "I have a rash on my penis",
+        "conditions": "None",
+        "medications": "None"
+    },
+    "diagnoses": [
+        {
+            "name": "Prearuptal Rash or Genital Herpes",
+            "explanation": "A preuptal rash or genital herpes can be caused by an STI, often appearing as a red, itchy, or painful rash on the genital area. This condition can be caused by herpes simplex virus (HSV) or other STIs.",
+            "common_symptoms": [
+                "Rash/itching on genital area",
+                "Painful/itchy sensations during urination"
+            ],
+            "causes": [
+                "Exposure to HSV or other STIs",
+                "Underlying skin conditions"
+            ],
+            "potential_treatments": [
+                "Antiviral medications for HSV",
+                "Topical creams for itching and inflammation"
+            ],
+            "recommendations": [
+                "Practice safe sex",
+                "Get tested for STIs",
+                "Avoid scratching or irritation of the affected area"
+            ],
+            "next_steps": "Visit a healthcare provider for a proper diagnosis and treatment plan"
+        }
+    ],
+    "message": "A message to the user that their information has been processed and a ticket has been created.",
+    "summary": "Based on your symptoms, we strongly recommend that you visit a healthcare provider for a proper diagnosis and treatment plan. Practice safe sex, get tested for STIs, and avoid scratching or irritation of the affected area. Keep in mind that this is not a substitute for professional medical advice. You will be assigned a virtual health assistant to support you throughout your care."
+}
