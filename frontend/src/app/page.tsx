@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { CardWithIcons } from "@/app/dashboard/page";
+// import Image from "next/image";
+import { CardWithIcons } from "@/app/(dashboard)/admin/page";
 
 export default function Home() {
   return (
