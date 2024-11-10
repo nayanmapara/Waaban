@@ -145,11 +145,7 @@ async function getPatientData(id: string): Promise<Person | null> {
       console.error('Error fetching patient:', error);
     }
   }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 638313b (landing page)
   return mockData.find(patient => patient.id === id) || null;
 }
 
@@ -179,11 +175,9 @@ export default async function PatientPage({ params }: { params: { id: string } }
   return (
     <div className="container mx-auto p-4">
       <div className="mb-6">
-<<<<<<< HEAD
-        <Link href="/">
-=======
+
         <Link href="/admin">
->>>>>>> 638313b (landing page)
+
           <Button variant="ghost" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Back to Patients
@@ -202,16 +196,6 @@ export default async function PatientPage({ params }: { params: { id: string } }
               </Avatar>
               <div className="space-y-2">
                 <CardTitle className="text-2xl">{patient.name}</CardTitle>
-<<<<<<< HEAD
-                <Badge 
-                  className={`${
-                    patient.priority.toLowerCase() === "high" 
-                      ? "bg-red-500" 
-                      : patient.priority.toLowerCase() === "low" 
-                      ? "bg-green-500" 
-                      : "bg-orange-500"
-                  } text-white`}
-=======
                 <Badge
                   className={`${patient.priority.toLowerCase() === "high"
                     ? "bg-red-500"
@@ -219,13 +203,13 @@ export default async function PatientPage({ params }: { params: { id: string } }
                       ? "bg-green-500"
                       : "bg-orange-500"
                     } text-white`}
->>>>>>> 638313b (landing page)
+
                 >
                   {patient.priority}
                 </Badge>
-              </div>
-            </div>
-          </CardHeader>
+              </div >
+            </div >
+          </CardHeader >
           <CardContent className="space-y-6">
             {/* Basic Information */}
             <div className="grid grid-cols-3 gap-4">
@@ -249,11 +233,8 @@ export default async function PatientPage({ params }: { params: { id: string } }
                 <h3 className="font-semibold">Current Symptoms</h3>
                 <p className="text-sm">{patient.symptoms}</p>
               </div>
-<<<<<<< HEAD
-              
-=======
 
->>>>>>> 638313b (landing page)
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <h3 className="font-semibold">Existing Conditions</h3>
@@ -264,59 +245,50 @@ export default async function PatientPage({ params }: { params: { id: string } }
                   <p className="text-sm">{patient.medications}</p>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </div >
+          </CardContent >
+        </Card >
 
         {/* Diagnoses Section */}
-        {patient.diagnoses && patient.diagnoses.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Diagnosis & Recommendations</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {patient.diagnoses.map((diagnosis, index) => (
-                <div key={index} className="space-y-4">
-                  <h3 className="font-semibold text-lg">{diagnosis.name}</h3>
-                  <p className="text-sm">{diagnosis.explanation}</p>
-<<<<<<< HEAD
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Common Symptoms</h4>
-                    <ul className="list-disc list-inside text-sm">
-                      {diagnosis.common_symptoms.map((symptom, idx) => (
-                        <li key={idx}>{symptom}</li>
-                      ))}
-                    </ul>
-                  </div>
+        {
+          patient.diagnoses && patient.diagnoses.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Diagnosis & Recommendations</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {patient.diagnoses.map((diagnosis, index) => (
+                  <div key={index} className="space-y-4">
+                    <h3 className="font-semibold text-lg">{diagnosis.name}</h3>
+                    <p className="text-sm">{diagnosis.explanation}</p>
 
-                  <div className="space-y-2">
-=======
 
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Common Symptoms</h4>
-                    <ul className="list-disc list-inside text-sm">
-                      {diagnosis.common_symptoms.map((symptom, idx) => (
-                        <li key={idx}>{symptom}</li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div className="space-y-2">
+                      <h4 className="font-medium">Common Symptoms</h4>
+                      <ul className="list-disc list-inside text-sm">
+                        {diagnosis.common_symptoms.map((symptom, idx) => (
+                          <li key={idx}>{symptom}</li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div className="space-y-2">
->>>>>>> 638313b (landing page)
-                    <h4 className="font-medium">Recommendations</h4>
-                    <ul className="list-disc list-inside text-sm">
-                      {diagnosis.recommendations.map((rec, idx) => (
-                        <li key={idx}>{rec}</li>
-                      ))}
-                    </ul>
+                    <div className="space-y-2">
+
+                      <h4 className="font-medium">Recommendations</h4>
+                      <ul className="list-disc list-inside text-sm">
+                        {diagnosis.recommendations.map((rec, idx) => (
+                          <li key={idx}>{rec}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
+                ))
+                }
+              </CardContent >
+            </Card >
+          )
+        }
+      </div >
+    </div >
   )
 }
