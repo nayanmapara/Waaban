@@ -90,13 +90,13 @@ def recording_complete():
         # return jsonify({"error": e}), 500
  
     os.remove(audio_file_path)  # Delete the audio file after transcription
-    return True
+    return jsonify({"error": "Failed to transcribe audio"}), 500
 
 @app.route("/data", methods=["GET"])
 def get_data():
-    with open('./backend/data.json', 'r') as file:
+    with open('./output/data.json', 'r') as file:
         data = json.load(file)
-
+    
     return jsonify(data)
 
 if __name__ == '__main__':

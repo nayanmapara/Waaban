@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+# from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -9,8 +9,8 @@ import re
 load_dotenv()
 
 class WaabanAssistant:
-    def __init__(self, api_key, output_dir='./backend/output/'):
-        self.api_key = api_key
+    def __init__(self, output_dir='./output/'):
+        self.api_key = os.getenv("GROQ_API_KEY")
         self.output_dir = output_dir
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -180,7 +180,7 @@ class WaabanAssistant:
             sanitized_name = re.sub(r'\W+', '_', patient.get('name').lower())
             # Optionally, add a timestamp to ensure uniqueness
             # timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            output_file_path = os.path.join(self.output_dir, f"{sanitized_name}.json")
+            output_file_path = os.path.join(self.output_dir, "data.json")
             
             with open(output_file_path, 'w') as json_file:
                 json.dump(json_output, json_file, indent=4)
