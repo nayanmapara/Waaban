@@ -1,10 +1,10 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
 export type Person = {
-  id: string;  // Add this
+  id: string;
   name: string;
   age: number;
   gender: string;
@@ -16,7 +16,7 @@ const personKeys: (keyof Person)[] = ["name", "age", "gender", "priority"];
 const generateColumns = (keys: (keyof Person)[]): ColumnDef<Person>[] => {
   const avatarColumn: ColumnDef<Person> = {
     accessorKey: "avatarUrl",
-    header: () => <div className="">Avatar</div>,
+    header: () => <div>Avatar</div>,
     cell: ({ row }) => {
       const avatarUrl = row.getValue("avatarUrl");
       return (
@@ -48,7 +48,18 @@ const generateColumns = (keys: (keyof Person)[]): ColumnDef<Person>[] => {
           {key.charAt(0).toUpperCase() + key.slice(1)}
         </div>
       ),
-      cell: ({ row }) => <div className="text-left">{row.getValue(key)}</div>,
+      cell: ({ row }) => {
+        if (key === "priority") {
+          const priority = row.getValue("priority") as string;
+          const color = priority.toLowerCase() === "high" ? "bg-red-500" : priority.toLowerCase() === "low" ? "bg-green-500" : "bg-orange-500";
+          return (
+            <Badge className={`${color} text-white`}>
+              {priority.charAt(0).toUpperCase() + priority.slice(1)}
+            </Badge>
+          );
+        }
+        return <div className="text-left">{row.getValue(key)}</div>;
+      },
     });
   });
 
