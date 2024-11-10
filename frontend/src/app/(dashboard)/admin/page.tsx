@@ -4,6 +4,8 @@ import { ChartArea, User2 } from "lucide-react";
 import * as React from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const cardItems = [
   {
@@ -43,7 +45,8 @@ function CustomCard({
 
 export default function CardWithIcons() {
   return (
-    <div className="flex items-center bg-gradient-to-br from-orange-200 to-orange-300 w-full justify-center">
+    <div className="flex items-center bg-gradient-to-b from-orange-200 to-orange-400   w-full justify-center">
+
       <div className="flex flex-row gap-5">
         {cardItems.map((item, index) => (
           <CustomCard

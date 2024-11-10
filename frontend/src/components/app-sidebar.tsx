@@ -45,7 +45,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar >
-      <SidebarContent className="bg-orange-200 bg-gradient-to-br from-orange-200 to-orange-300">
+      <SidebarContent className="bg-orange-200 bg-gradient-to-b from-orange-100 to-orange-400">
         <SidebarGroup >
           <SidebarGroupLabel className="text-xl mb-3 text-black">Waaban</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -64,12 +64,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <hr />
       <SidebarFooter className="bg-orange-400">
         <SidebarMenu >
           <SidebarMenuItem >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton >
+                <SidebarMenuButton className="font-semibold text-black" >
                   <User2 /> James Webb
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>

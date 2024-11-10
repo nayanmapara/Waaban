@@ -39,13 +39,13 @@ export function DataTable<TData extends { id: string; }, TValue>({
     };
 
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md border border-white">
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id}>
+                                <TableHead key={header.id} className="border-white bg-white">
                                     {header.isPlaceholder
                                         ? null
                                         : flexRender(
@@ -64,7 +64,7 @@ export function DataTable<TData extends { id: string; }, TValue>({
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
                                 onClick={() => handleRowClick(row.original.id)}
-                                className="cursor-pointer hover:bg-gray-100"
+                                className="cursor-pointer border-white bg-white bg-opacity-20 hover:bg-orange-100"
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>

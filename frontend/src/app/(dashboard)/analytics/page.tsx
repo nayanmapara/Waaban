@@ -4,6 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -87,7 +90,15 @@ export default function PatientPage() {
 
 
     return (
-        <div className="p-6 max-w-4xl mx-auto">
+        <div className="p-6 max-w-4xl mx-auto  bg-gradient-to-b from-orange-200 to-orange-400 ">
+            <div className="mb-6">
+                <Link href="/">
+                    <Button variant="ghost" className="gap-2">
+                        <ArrowLeft className="h-4 w-4" />
+                        Back to Patients
+                    </Button>
+                </Link>
+            </div>
             <h1 className="flex text-4xl justify-center font-bold mb-6">Analysis</h1>
 
             {/* Patient Priority Chart */}

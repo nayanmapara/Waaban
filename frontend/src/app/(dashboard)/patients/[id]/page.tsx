@@ -154,17 +154,17 @@ export default async function PatientPage({ params }: { params: { id: string } }
 
   if (!patient) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4  bg-gradient-to-b from-orange-200 to-orange-400 ">
         <div className="mb-6">
           <Link href="/">
-            <Button variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2 ">
               <ArrowLeft className="h-4 w-4" />
               Back to Patients
             </Button>
           </Link>
         </div>
         <Card className="max-w-2xl mx-auto">
-          <CardContent className="p-6">
+          <CardContent className="p-6  ">
             <p className="text-center text-muted-foreground">Patient not found</p>
           </CardContent>
         </Card>
@@ -173,7 +173,7 @@ export default async function PatientPage({ params }: { params: { id: string } }
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4  bg-gradient-to-b from-orange-200 to-orange-400 ">
       <div className="mb-6">
 
         <Link href="/admin">
@@ -185,7 +185,7 @@ export default async function PatientPage({ params }: { params: { id: string } }
         </Link>
       </div>
 
-      <div className="space-y-6 max-w-4xl mx-auto">
+      <div className="space-y-6 max-w-4xl mx-auto ">
         <Card>
           <CardHeader className="space-y-6">
             <div className="flex items-center space-x-4">
@@ -210,7 +210,7 @@ export default async function PatientPage({ params }: { params: { id: string } }
               </div >
             </div >
           </CardHeader >
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 ">
             {/* Basic Information */}
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">

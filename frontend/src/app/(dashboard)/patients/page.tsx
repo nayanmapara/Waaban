@@ -1,5 +1,9 @@
 import { Person, columns } from "./columns";
 import { DataTable } from "./data-table";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+
 
 async function fetchDataFromAPI(): Promise<Person[] | null> {
     try {
@@ -72,7 +76,15 @@ async function getData(): Promise<Person[]> {
 export default async function DemoPage() {
     const data = await getData();
     return (
-        <div className="flex-1 flex justify-between w-full p-10">
+        <div className="flex-1 flex-col justify-between w-full p-10  bg-gradient-to-b from-orange-200 to-orange-400 ">
+            <div className="mb-6 h-12 " >
+                <Link href="/">
+                    <Button variant="ghost" className="gap-2 rounded-md bg-orange-400">
+                        <ArrowLeft className="h-4 w-4" />
+                        Back to Patients
+                    </Button>
+                </Link>
+            </div>
             <div className="w-full">
                 <DataTable columns={columns} data={data} />
             </div>
