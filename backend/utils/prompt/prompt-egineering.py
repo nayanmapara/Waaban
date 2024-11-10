@@ -10,7 +10,7 @@ if not os.path.exists(output_dir):
     os.makedirs(output_dir)
     
 client = OpenAI(base_url="https://api.groq.com/openai/v1",
-                api_key='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')
+                api_key=os.environ['GROQ_API_KEY'])
 
 
 def determine_category(symptoms):
