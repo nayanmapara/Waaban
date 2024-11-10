@@ -1,4 +1,4 @@
-<img src="./public/assets/video/demo.gif" alt="Video Walkthrough">
+<img src="/frontend/public/assets/video/demo.gif" alt="Video Walkthrough">
 
 ### **Inspiration** ✨  
 Waaban, meaning "morning light" in Ojibwe, embodies the dawn of accessible healthcare for all. Our mission is to address the unique challenges faced by remote and underserved communities, where healthcare access is often limited. With a compassionate, technology-driven approach, Waaban aims to be the guiding light that bridges healthcare gaps, offering vital health tools and community support.
